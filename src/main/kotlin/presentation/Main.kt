@@ -7,6 +7,7 @@ import di.DI
 @Suppress("DuplicatedCode")
 fun main() {
     do {
+        println("-------------------------------------------")
         DI.cinemaHelper.showMenu()
         val command = DI.cinemaHelper.getNumber(1, 10)
         when (command) {

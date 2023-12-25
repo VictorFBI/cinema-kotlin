@@ -2,6 +2,9 @@ package data
 
 import domain.entity.MovieEntity
 import domain.entity.SessionEntity
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
+import java.io.File
 import java.time.Duration
 import java.time.LocalDate
 
@@ -30,29 +33,35 @@ class RuntimeCinemaDao : CinemaDao {
     override fun bookTicket(session: SessionEntity, place: Pair<Int, Int>) {
         val sessionDao = RuntimeSessionDao(session)
         sessionDao.occupy(place)
+        updateFileSession()
     }
 
     override fun returnTicket(session: SessionEntity, place: Pair<Int, Int>) {
         val sessionDao = RuntimeSessionDao(session)
         sessionDao.free(place)
+        updateFileSession()
     }
 
     override fun addSession(movie: MovieEntity, date: LocalDate) {
         val session = SessionEntity(movie, date)
         sessions[date] = session
+        updateFileSession()
     }
 
     override fun addMovie(name: String, duration: Duration) {
         val movie = MovieEntity(name, duration)
         movies[name] = movie
+        updateFileMovies()
     }
 
     override fun deleteMovie(name: String) {
         movies.remove(name)
+        updateFileMovies()
     }
 
     override fun deleteSession(date: LocalDate) {
         sessions.remove(date)
+        updateFileSession()
     }
 
     override fun getSessions(): MutableList<SessionEntity> {
@@ -71,5 +80,18 @@ class RuntimeCinemaDao : CinemaDao {
         }
 
         return ans
+    }
+
+    private fun updateFileSession() {
+        val json = Json { serializersModule = module }
+        val strSessions = json.encodeToString(sessions)
+        val fileSessions = File("src/main/resources/sessions.json")
+        fileSessions.writeText(strSessions)
+    }
+
+    private fun updateFileMovies() {
+        val strMovies = Json.encodeToString(movies)
+        val fileMovies = File("src/main/resources/movies.json")
+        fileMovies.writeText(strMovies)
     }
 }

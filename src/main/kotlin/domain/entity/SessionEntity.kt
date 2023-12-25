@@ -1,6 +1,6 @@
 package domain.entity
 
-import kotlinx.serialization.Contextual
+import data.LocalDateSerializer
 import kotlinx.serialization.Serializable
 import presentation.io.customToString
 import java.time.LocalDate
@@ -9,7 +9,7 @@ import java.time.LocalDate
 @Serializable
 data class SessionEntity(
     var movie: MovieEntity,
-    @Contextual var date: LocalDate,
+    @Serializable(with = LocalDateSerializer::class) var date: LocalDate,
 ) {
     val places: Array<Array<Int>> = Array(10) { Array(10) { 0 } }
     override fun equals(other: Any?): Boolean {

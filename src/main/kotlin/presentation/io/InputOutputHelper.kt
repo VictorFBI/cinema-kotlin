@@ -32,7 +32,7 @@ fun LocalDate.customToString(): String {
     return "$day.$month.$year"
 }
 
-class RuntimeInputOutputHelper(private val dao: RuntimeCinemaDao, private val validator: RuntimeCinemaValidator) :
+class RuntimeInputOutputHelper :
     InputOutputHelper {
     private val menu = arrayOf(
         "1. Show places in the session",

@@ -81,7 +81,7 @@ class RuntimeCinemaController(
         return when (validator.validateMovie(dao.movies, movie)) {
             is Result.Success -> OutputModel("Movie already exists")
             is Result.Error -> {
-                dao.movies[movie.name] = movie
+                dao.addMovie(movie.name, movie.duration)
                 OutputModel("Success")
             }
         }
@@ -90,7 +90,7 @@ class RuntimeCinemaController(
     override fun deleteMovie(movie: MovieEntity): OutputModel {
         return when (val result = validator.validateMovie(dao.movies, movie)) {
             is Result.Success -> {
-                dao.movies.remove(movie.name)
+                dao.deleteMovie(movie.name)
                 OutputModel("Success")
             }
 
@@ -103,7 +103,7 @@ class RuntimeCinemaController(
         return when (validator.validateSession(dao.sessions, session)) {
             is Result.Success -> OutputModel("Session already exists")
             is Result.Error -> {
-                dao.sessions[session.date] = session
+                dao.addSession(session.movie, session.date)
                 OutputModel("Success")
             }
         }
@@ -112,7 +112,7 @@ class RuntimeCinemaController(
     override fun deleteSession(session: SessionEntity): OutputModel {
         return when (val result = validator.validateSession(dao.sessions, session)) {
             is Result.Success -> {
-                dao.sessions.remove(session.date)
+                dao.deleteSession(session.date)
                 OutputModel("Success")
             }
 

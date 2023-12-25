@@ -20,8 +20,5 @@ object DI {
             cinemaValidator
         )
     val cinemaHelper: InputOutputHelper
-        get() = RuntimeInputOutputHelper(
-            cinemaDao,
-            cinemaValidator
-        )
+        get() = RuntimeInputOutputHelper()
 }
