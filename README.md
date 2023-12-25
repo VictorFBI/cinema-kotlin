@@ -7,3 +7,4 @@
 ## Диаграмма прецедентов
 ![image](https://github.com/VictorFBI/cinema-kotlin/assets/124510561/8e79c70c-3dfe-4fdc-afd1-65f33bdfd19a)
 ## Диаграмма классов
+![image](https://github.com/VictorFBI/cinema-kotlin/assets/124510561/981d7b78-c829-4627-a785-4e8e031dcad2)
